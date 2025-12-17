@@ -1,0 +1,3270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Tracker - LifeSync Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #ff5a8c; /* Strawberry Pink */
+            --primary-light: #ff8ab0;
+            --secondary: #ff2e6d;
+            --accent: #ff9ebf;
+            --success: #4cc9f0;
+            --warning: #ffb74d;
+            --danger: #ff5252;
+            --light: #fff5f8;
+            --dark: #2c2c2c;
+            --gray: #888888;
+            --gray-light: #f0f0f0;
+            --border-radius: 16px;
+            --box-shadow: 0 6px 20px rgba(255, 90, 140, 0.15);
+            --transition: all 0.3s ease;
+            --baby-blue: #a6d8ff;
+            --baby-pink: #ffcce6;
+            --baby-green: #b8e6b8;
+        }
+
+        body {
+            background-color: #fffafc;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            background-image: radial-gradient(var(--primary-light) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 90, 140, 0.1);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: -5px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: var(--box-shadow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 90, 140, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 90, 140, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 90, 140, 0);
+            }
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            animation: slideInLeft 0.8s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .sidebar h2 i {
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray);
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .sidebar li:hover {
+            background-color: var(--light);
+            color: var(--primary);
+            transform: translateX(5px);
+            border-color: rgba(255, 90, 140, 0.2);
+        }
+
+        .sidebar li.active {
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.1), rgba(255, 142, 191, 0.1));
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 600;
+            animation: highlightPulse 2s infinite;
+        }
+
+        @keyframes highlightPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 90, 140, 0.2);
+            }
+            70% {
+                box-shadow: 0 0 0 5px rgba(255, 90, 140, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 90, 140, 0);
+            }
+        }
+
+        .pregnancy-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            animation: slideInRight 0.8s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .page-header {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .page-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .page-header p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h3 {
+            font-size: 22px;
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            animation: underlineExpand 2s infinite alternate;
+        }
+
+        @keyframes underlineExpand {
+            0% {
+                width: 0%;
+                left: 0;
+            }
+            50% {
+                width: 100%;
+                left: 0;
+            }
+            100% {
+                width: 0%;
+                left: 100%;
+            }
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 90, 140, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 90, 140, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 90, 140, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-baby {
+            background: linear-gradient(135deg, var(--baby-blue), var(--baby-pink));
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(166, 216, 255, 0.3);
+        }
+
+        .btn-baby:hover {
+            background: linear-gradient(135deg, var(--baby-pink), var(--baby-blue));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(166, 216, 255, 0.4);
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 16px;
+        }
+
+        .form-group label.required::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 2px solid var(--gray-light);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 90, 140, 0.1);
+        }
+
+        .form-control:disabled {
+            background-color: var(--gray-light);
+            cursor: not-allowed;
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .pregnancy-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .pregnancy-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pregnancy-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .pregnancy-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(255, 90, 140, 0.2);
+        }
+
+        .baby-card {
+            border-color: rgba(166, 216, 255, 0.3);
+            background: linear-gradient(135deg, rgba(255, 204, 230, 0.05), rgba(166, 216, 255, 0.05));
+        }
+
+        .baby-card::after {
+            background: linear-gradient(180deg, var(--baby-blue), var(--baby-pink));
+        }
+
+        .pregnancy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .pregnancy-header i {
+            font-size: 24px;
+            color: var(--primary);
+            background-color: rgba(255, 90, 140, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: iconSpin 5s linear infinite;
+        }
+
+        @keyframes iconSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .baby-header i {
+            color: var(--baby-blue);
+            background-color: rgba(166, 216, 255, 0.2);
+        }
+
+        .pregnancy-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .baby-value {
+            background: linear-gradient(135deg, var(--baby-blue), #ff8ab0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pregnancy-label {
+            color: var(--gray);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .pregnancy-phase {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            width: fit-content;
+            animation: phaseGlow 2s infinite alternate;
+        }
+
+        @keyframes phaseGlow {
+            from {
+                box-shadow: 0 0 5px currentColor;
+            }
+            to {
+                box-shadow: 0 0 15px currentColor;
+            }
+        }
+
+        .phase-first {
+            background-color: rgba(166, 216, 255, 0.15);
+            color: var(--baby-blue);
+        }
+
+        .phase-second {
+            background-color: rgba(255, 90, 140, 0.15);
+            color: var(--primary);
+        }
+
+        .phase-third {
+            background-color: rgba(255, 158, 191, 0.15);
+            color: var(--accent);
+        }
+
+        .baby-gender {
+            background-color: rgba(184, 230, 184, 0.15);
+            color: #4CAF50;
+        }
+
+        .pregnancy-visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .pregnancy-visualization {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .progress-section {
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background-color: var(--gray-light);
+            border-radius: 6px;
+            margin-top: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 1s ease-in-out;
+        }
+
+        .baby-progress {
+            background: linear-gradient(90deg, var(--baby-blue), var(--baby-pink));
+        }
+
+        .week-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .week-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        .week-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 90, 140, 0.15);
+        }
+
+        .week-item.active {
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.1), rgba(255, 142, 191, 0.1));
+            border: 2px solid var(--primary);
+            animation: weekActive 1s infinite alternate;
+        }
+
+        @keyframes weekActive {
+            from {
+                box-shadow: 0 0 5px rgba(255, 90, 140, 0.5);
+            }
+            to {
+                box-shadow: 0 0 15px rgba(255, 90, 140, 0.8);
+            }
+        }
+
+        .week-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .week-label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .symptoms-section {
+            margin-top: 30px;
+        }
+
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .symptom-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            animation: symptomAppear 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes symptomAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .symptom-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 90, 140, 0.15);
+            border-color: var(--primary);
+        }
+
+        .symptom-item.active {
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.1), rgba(255, 142, 191, 0.1));
+            border-color: var(--primary);
+            animation: symptomActive 1s infinite alternate;
+        }
+
+        @keyframes symptomActive {
+            from {
+                box-shadow: 0 0 5px rgba(255, 90, 140, 0.5);
+            }
+            to {
+                box-shadow: 0 0 15px rgba(255, 90, 140, 0.8);
+            }
+        }
+
+        .symptom-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .symptom-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .appointments-section {
+            background: linear-gradient(135deg, rgba(166, 216, 255, 0.1), rgba(255, 204, 230, 0.1));
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .appointments-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(166, 216, 255, 0.1) 0%, transparent 70%);
+            animation: predictionBg 10s infinite linear;
+        }
+
+        @keyframes predictionBg {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .appointments-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .appointment-date {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 10px 0;
+            background: linear-gradient(135deg, var(--baby-blue), #ff8ab0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: dateGlow 2s infinite alternate;
+        }
+
+        @keyframes dateGlow {
+            from {
+                text-shadow: 0 0 5px rgba(166, 216, 255, 0.5);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(166, 216, 255, 0.8);
+            }
+        }
+
+        .baby-size-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.05), rgba(255, 142, 191, 0.05));
+            border-radius: var(--border-radius);
+        }
+
+        .comparison-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .comparison-icon {
+            font-size: 40px;
+            color: var(--primary);
+        }
+
+        .comparison-size {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .comparison-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .baby-growth-chart {
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(166, 216, 255, 0.05), rgba(255, 204, 230, 0.05));
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .growth-bar {
+            width: 30px;
+            background: linear-gradient(180deg, var(--baby-blue), var(--baby-pink));
+            border-radius: 8px 8px 0 0;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+            animation: chartGrow 1.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes chartGrow {
+            from {
+                height: 0;
+            }
+            to {
+                height: var(--chart-height);
+            }
+        }
+
+        .growth-bar:hover {
+            background: linear-gradient(180deg, var(--baby-pink), var(--baby-blue));
+            transform: scale(1.05);
+        }
+
+        .growth-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .data-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(255, 90, 140, 0.3);
+            z-index: 1000;
+            font-weight: 500;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+            border-left: 5px solid white;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .floating-orb {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: floatOrb 20s infinite linear;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(100vw, 50vh) rotate(90deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(50vw, 100vh) rotate(180deg);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translate(0, 50vh) rotate(270deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        .baby-orb {
+            background: radial-gradient(circle, var(--baby-blue), transparent 70%);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: modalSlideIn 0.5s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-weight: 600;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .step.active .step-circle {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-circle {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .baby-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin: 20px 0;
+        }
+
+        .baby-icon {
+            font-size: 80px;
+            color: var(--baby-blue);
+            animation: babyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes babyFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .trimester-section {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.05), rgba(255, 142, 191, 0.05));
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .trimester-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .trimester-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            background-color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trimester-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .trimester-weeks {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .trimester-content {
+            padding-left: 55px;
+        }
+
+        .trimester-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .trimester-point i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        @media (max-width: 1100px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .sidebar h2 {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .sidebar li {
+                margin-bottom: 0;
+                flex: 1;
+                min-width: 140px;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .pregnancy-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .pregnancy-visualization {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .data-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .symptoms-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .step-indicator {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .step-indicator::before {
+                display: none;
+            }
+            
+            .week-indicator {
+                justify-content: center;
+            }
+            
+            .baby-size-comparison {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background orbs -->
+    <div class="floating-orb" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="floating-orb baby-orb" style="top: 60%; right: 10%; animation-delay: -5s; width: 150px; height: 150px;"></div>
+    <div class="floating-orb" style="bottom: 20%; left: 15%; animation-delay: -10s; width: 80px; height: 80px;"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-baby"></i>
+                </div>
+                <div>
+                    <h1>LifeSync Pro</h1>
+                    <p>Your all-in-one planner</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <span>Welcome back, <strong>Jane!</strong></span>
+                <div class="user-avatar">J</div>
+            </div>
+        </header>
+
+        <main>
+            <nav class="sidebar">
+                <h2><i class="fas fa-th-large"></i> Dashboard</h2>
+                <ul>
+                    <li><i class="fas fa-calendar-day"></i> <a href="index.html" style="text-decoration: none; color: inherit;">Daily Planner</a></li>
+                    <li><i class="fas fa-wallet"></i> <a href="budget.html" style="text-decoration: none; color: inherit;">Budget</a></li>
+                    <li><i class="fas fa-sync-alt"></i> <a href="cycle-tracker.html" style="text-decoration: none; color: inherit;">Cycle Tracker</a></li>
+                    <li class="active"><i class="fas fa-baby"></i> <a href="pregnancy.html" style="text-decoration: none; color: inherit;">Pregnancy</a></li>
+                    <li><i class="fas fa-utensils"></i> <a href="meal-planner.html" style="text-decoration: none; color: inherit;">Meal Planner</a></li>
+                    <li><i class="fas fa-calendar-alt"></i> <a href="calendar.html" style="text-decoration: none; color: inherit;">Calendar</a></li>
+                </ul>
+            </nav>
+
+            <div class="pregnancy-content">
+                <!-- Setup Section (Visible when no pregnancy data) -->
+                <section class="page-header" id="setup-section">
+                    <h2>Pregnancy Tracker</h2>
+                    <p>Welcome to your pregnancy journey! Let's get started by entering your pregnancy details.</p>
+                    
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step active" id="step1">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">Due Date</div>
+                        </div>
+                        <div class="step" id="step2">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">Pregnancy Details</div>
+                        </div>
+                        <div class="step" id="step3">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">Health Info</div>
+                        </div>
+                        <div class="step" id="step4">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">Review</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 1: Due Date Calculation -->
+                <section class="input-section" id="step1-content">
+                    <div class="section-header">
+                        <h3>Calculate Your Due Date</h3>
+                    </div>
+                    
+                    <div class="baby-animation">
+                        <i class="fas fa-baby baby-icon"></i>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label class="required">How would you like to calculate your due date?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="method-lmp" name="due-date-method" value="lmp" checked>
+                                    <label for="method-lmp">Last Menstrual Period (LMP)</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="method-conception" name="due-date-method" value="conception">
+                                    <label for="method-conception">Conception Date</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="method-ultrasound" name="due-date-method" value="ultrasound">
+                                    <label for="method-ultrasound">Ultrasound Date</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="method-known" name="due-date-method" value="known">
+                                    <label for="method-known">I already know my due date</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="lmp-input">
+                            <label for="last-period" class="required">First day of last menstrual period</label>
+                            <input type="date" id="last-period" class="form-control">
+                            <span class="form-hint">This is the most common method to calculate due date</span>
+                        </div>
+                        
+                        <div class="form-group" id="conception-input" style="display: none;">
+                            <label for="conception-date" class="required">Conception date</label>
+                            <input type="date" id="conception-date" class="form-control">
+                            <span class="form-hint">If you know the exact conception date</span>
+                        </div>
+                        
+                        <div class="form-group" id="ultrasound-input" style="display: none;">
+                            <label for="ultrasound-date" class="required">Ultrasound date</label>
+                            <input type="date" id="ultrasound-date" class="form-control">
+                            <span class="form-hint">Date of your first ultrasound</span>
+                        </div>
+                        
+                        <div class="form-group" id="known-due-date-input" style="display: none;">
+                            <label for="due-date" class="required">Your due date</label>
+                            <input type="date" id="due-date" class="form-control">
+                            <span class="form-hint">As provided by your healthcare provider</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="cycle-irregular" name="cycle-irregular">
+                                <label for="cycle-irregular">My cycles are irregular (longer than 28 days)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="cycle-length-input" style="display: none;">
+                            <label for="cycle-length" class="required">Average cycle length</label>
+                            <div class="input-with-icon">
+                                <input type="number" id="cycle-length" class="form-control" min="21" max="45" placeholder="e.g., 32">
+                                <span class="input-icon">days</span>
+                            </div>
+                            <span class="form-hint">If your cycles are longer than 28 days, enter your average cycle length</span>
+                        </div>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <button class="btn btn-baby" id="calculate-due-date">
+                            <i class="fas fa-calculator"></i> Calculate Due Date
+                        </button>
+                        <button class="btn btn-primary" id="next-to-step2">
+                            Next: Pregnancy Details <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 2: Pregnancy Details -->
+                <section class="input-section" id="step2-content" style="display: none;">
+                    <div class="section-header">
+                        <h3>Pregnancy Details</h3>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="pregnancy-number" class="required">Which pregnancy is this?</label>
+                            <select id="pregnancy-number" class="form-control">
+                                <option value="1">First Pregnancy</option>
+                                <option value="2">Second Pregnancy</option>
+                                <option value="3">Third Pregnancy</option>
+                                <option value="4">Fourth Pregnancy</option>
+                                <option value="5">Fifth or more</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Pregnancy Type</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="type-single" name="pregnancy-type" value="single" checked>
+                                    <label for="type-single">Single</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="type-twins" name="pregnancy-type" value="twins">
+                                    <label for="type-twins">Twins</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="type-triplets" name="pregnancy-type" value="triplets">
+                                    <label for="type-triplets">Triplets or more</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="baby-gender">Baby's Gender (if known)</label>
+                            <select id="baby-gender" class="form-control">
+                                <option value="unknown">Not sure yet</option>
+                                <option value="girl">Girl</option>
+                                <option value="boy">Boy</option>
+                                <option value="surprise">Surprise!</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="baby-names">Baby Name Ideas</label>
+                            <textarea id="baby-names" class="form-control" rows="3" placeholder="List your favorite baby names..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pregnancy-notes">Notes & Special Considerations</label>
+                            <textarea id="pregnancy-notes" class="form-control" rows="4" placeholder="Any special notes about your pregnancy..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <button class="btn btn-outline" id="back-to-step1">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" id="next-to-step3">
+                            Next: Health Info <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 3: Health Information -->
+                <section class="input-section" id="step3-content" style="display: none;">
+                    <div class="section-header">
+                        <h3>Health Information</h3>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="pre-pregnancy-weight">Pre-pregnancy Weight</label>
+                            <div class="input-with-icon">
+                                <input type="number" id="pre-pregnancy-weight" class="form-control" placeholder="e.g., 140">
+                                <span class="input-icon">lbs</span>
+                            </div>
+                            <span class="form-hint">Optional - for weight gain tracking</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="current-weight">Current Weight</label>
+                            <div class="input-with-icon">
+                                <input type="number" id="current-weight" class="form-control" placeholder="e.g., 145">
+                                <span class="input-icon">lbs</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <div class="input-with-icon">
+                                <input type="number" id="height" class="form-control" placeholder="e.g., 64">
+                                <span class="input-icon">inches</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Health Conditions</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-gestational-diabetes">
+                                    <label for="condition-gestational-diabetes">Gestational Diabetes</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-preeclampsia">
+                                    <label for="condition-preeclampsia">Preeclampsia</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-anemia">
+                                    <label for="condition-anemia">Anemia</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-hypertension">
+                                    <label for="condition-hypertension">High Blood Pressure</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-thyroid">
+                                    <label for="condition-thyroid">Thyroid Issues</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="condition-none">
+                                    <label for="condition-none">None</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="health-notes">Additional Health Notes</label>
+                            <textarea id="health-notes" class="form-control" rows="3" placeholder="Any other health information your provider should know..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="provider-name">Healthcare Provider Name</label>
+                            <input type="text" id="provider-name" class="form-control" placeholder="Dr. Smith">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="provider-phone">Provider Phone Number</label>
+                            <input type="tel" id="provider-phone" class="form-control" placeholder="(123) 456-7890">
+                        </div>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <button class="btn btn-outline" id="back-to-step2">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" id="next-to-step4">
+                            Next: Review <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 4: Review -->
+                <section class="input-section" id="step4-content" style="display: none;">
+                    <div class="section-header">
+                        <h3>Review Your Information</h3>
+                    </div>
+                    
+                    <div class="pregnancy-overview" id="review-summary">
+                        <!-- Summary will be dynamically added here -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="appointment-reminders" checked>
+                            <label for="appointment-reminders">Send me appointment reminders</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="weekly-updates" checked>
+                            <label for="weekly-updates">Send weekly pregnancy updates</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="symptom-tracking" checked>
+                            <label for="symptom-tracking">Enable daily symptom tracking</label>
+                        </div>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <button class="btn btn-outline" id="back-to-step3">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-baby" id="start-pregnancy-tracking">
+                            <i class="fas fa-baby"></i> Start Pregnancy Tracking
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Pregnancy Dashboard (Visible after setup) -->
+                <section class="page-header" id="pregnancy-dashboard" style="display: none;">
+                    <h2>Your Pregnancy Journey</h2>
+                    <p>Track your pregnancy week by week with personalized insights and tools.</p>
+                    
+                    <div class="pregnancy-overview">
+                        <div class="pregnancy-card baby-card" style="--i: 0;">
+                            <div class="pregnancy-header">
+                                <h3>Current Week</h3>
+                                <i class="fas fa-calendar-week"></i>
+                            </div>
+                            <div class="pregnancy-value baby-value" id="current-week">Week 12</div>
+                            <div class="pregnancy-label" id="current-trimester">First Trimester</div>
+                            <div class="pregnancy-phase phase-first" id="trimester-phase">1st Trimester</div>
+                        </div>
+
+                        <div class="pregnancy-card baby-card" style="--i: 1;">
+                            <div class="pregnancy-header">
+                                <h3>Days to Go</h3>
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="pregnancy-value baby-value" id="days-to-go">196</div>
+                            <div class="pregnancy-label" id="due-date-display">Due: Sep 15, 2026</div>
+                            <div class="pregnancy-phase phase-second">Counting Down</div>
+                        </div>
+
+                        <div class="pregnancy-card" style="--i: 2;">
+                            <div class="pregnancy-header">
+                                <h3>Baby Size</h3>
+                                <i class="fas fa-ruler"></i>
+                            </div>
+                            <div class="pregnancy-value" id="baby-size">Plum</div>
+                            <div class="pregnancy-label" id="baby-measurements">~2.1 inches, 0.5 oz</div>
+                            <div class="pregnancy-phase baby-gender" id="baby-gender-display">Gender: Unknown</div>
+                        </div>
+
+                        <div class="pregnancy-card" style="--i: 3;">
+                            <div class="pregnancy-header">
+                                <h3>Next Appointment</h3>
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="pregnancy-value" id="next-appointment">Dec 28</div>
+                            <div class="pregnancy-label" id="appointment-type">Prenatal Checkup</div>
+                            <div class="pregnancy-phase phase-third">In 12 days</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Progress Tracking -->
+                <section class="input-section" id="progress-section" style="display: none;">
+                    <div class="section-header">
+                        <h3>Pregnancy Progress</h3>
+                        <button class="btn btn-outline btn-small" id="log-weight-btn">Log Weight</button>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="pregnancy-label">Overall Progress</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill baby-progress" id="overall-progress" style="width: 30%"></div>
+                        </div>
+                        <div class="pregnancy-label" id="progress-text">30% complete - 12 of 40 weeks</div>
+                    </div>
+                    
+                    <div class="week-indicator" id="week-indicator">
+                        <!-- Week indicators will be dynamically added here -->
+                    </div>
+                    
+                    <div class="baby-growth-chart" id="baby-growth-chart">
+                        <!-- Growth chart will be dynamically added here -->
+                    </div>
+                </section>
+
+                <!-- Weekly Symptoms & Tracking -->
+                <div class="pregnancy-visualization" id="tracking-section" style="display: none;">
+                    <section class="input-section">
+                        <div class="section-header">
+                            <h3>This Week's Symptoms</h3>
+                            <button class="btn btn-outline btn-small" id="add-symptom-btn">Add Symptom</button>
+                        </div>
+                        
+                        <div class="symptoms-grid" id="symptoms-grid">
+                            <!-- Symptoms will be dynamically added here -->
+                        </div>
+                        
+                        <div class="symptoms-section">
+                            <div class="section-header">
+                                <h3>Weight Tracking</h3>
+                            </div>
+                            <div class="symptoms-grid" id="weight-grid">
+                                <!-- Weight tracking will be dynamically added here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="input-section">
+                        <div class="section-header">
+                            <h3>This Week's Development</h3>
+                            <button class="btn btn-outline btn-small" id="add-memory-btn">Add Memory</button>
+                        </div>
+                        
+                        <div class="baby-size-comparison">
+                            <div class="comparison-item">
+                                <div class="comparison-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="comparison-size" id="size-comparison">Plum</div>
+                                <div class="comparison-label">Baby Size</div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-icon">
+                                    <i class="fas fa-weight"></i>
+                                </div>
+                                <div class="comparison-size" id="weight-comparison">0.5 oz</div>
+                                <div class="comparison-label">Approx. Weight</div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-icon">
+                                    <i class="fas fa-ruler"></i>
+                                </div>
+                                <div class="comparison-size" id="length-comparison">2.1 in</div>
+                                <div class="comparison-label">Crown to Rump</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="weekly-notes">This Week's Notes</label>
+                            <textarea id="weekly-notes" class="form-control" rows="4" placeholder="How are you feeling this week? Any special moments?..."></textarea>
+                        </div>
+                        
+                        <div class="data-controls" style="margin-top: 20px;">
+                            <button class="btn btn-outline" id="save-weekly-notes">
+                                Save Weekly Notes
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Trimester Information -->
+                <section class="input-section" id="trimester-section" style="display: none;">
+                    <div class="section-header">
+                        <h3>Trimester Guide</h3>
+                        <div class="pregnancy-label" id="current-trimester-title">First Trimester (Weeks 1-13)</div>
+                    </div>
+                    
+                    <div class="trimester-section">
+                        <div class="trimester-header">
+                            <div class="trimester-number">1</div>
+                            <div>
+                                <div class="trimester-title">First Trimester</div>
+                                <div class="trimester-weeks">Weeks 1-13</div>
+                            </div>
+                        </div>
+                        <div class="trimester-content">
+                            <div class="trimester-point">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Baby's major organs begin to form</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Heart starts beating around week 6</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-check-circle"></i>
+                                <div>Common symptoms: fatigue, nausea, breast tenderness</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trimester-section" style="opacity: 0.6;">
+                        <div class="trimester-header">
+                            <div class="trimester-number">2</div>
+                            <div>
+                                <div class="trimester-title">Second Trimester</div>
+                                <div class="trimester-weeks">Weeks 14-27</div>
+                            </div>
+                        </div>
+                        <div class="trimester-content">
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Baby's movements become noticeable</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Gender can often be determined</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Energy often increases, nausea typically subsides</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trimester-section" style="opacity: 0.4;">
+                        <div class="trimester-header">
+                            <div class="trimester-number">3</div>
+                            <div>
+                                <div class="trimester-title">Third Trimester</div>
+                                <div class="trimester-weeks">Weeks 28-40+</div>
+                            </div>
+                        </div>
+                        <div class="trimester-content">
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Baby gains weight rapidly</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Braxton Hicks contractions may occur</div>
+                            </div>
+                            <div class="trimester-point">
+                                <i class="fas fa-clock"></i>
+                                <div>Final preparations for birth</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Appointments & Checklist -->
+                <section class="appointments-section" id="appointments-section" style="display: none;">
+                    <div class="appointments-content">
+                        <div class="section-header">
+                            <h3>Appointments & Checklist</h3>
+                            <button class="btn btn-baby btn-small" id="add-appointment-btn">Add Appointment</button>
+                        </div>
+                        
+                        <div class="pregnancy-overview">
+                            <div class="pregnancy-card">
+                                <div class="pregnancy-header">
+                                    <h3>Next Appointment</h3>
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                                <div class="appointment-date" id="next-appointment-date">December 28, 2025</div>
+                                <div class="pregnancy-label" id="next-appointment-time">10:30 AM with Dr. Smith</div>
+                                <div class="pregnancy-label" id="next-appointment-notes">Prenatal checkup - bring urine sample</div>
+                            </div>
+                            
+                            <div class="pregnancy-card">
+                                <div class="pregnancy-header">
+                                    <h3>Important Tests</h3>
+                                    <i class="fas fa-vial"></i>
+                                </div>
+                                <div class="pregnancy-label" id="upcoming-tests">Nuchal Translucency Scan (Week 12)</div>
+                                <div class="pregnancy-label">Anatomy Scan (Week 20)</div>
+                                <div class="pregnancy-label">Glucose Test (Week 24-28)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 30px;">
+                            <label>Pregnancy Checklist</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-prenatal" checked>
+                                    <label for="checklist-prenatal">Start prenatal vitamins</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-doctor" checked>
+                                    <label for="checklist-doctor">Choose healthcare provider</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-dating" checked>
+                                    <label for="checklist-dating">Dating ultrasound</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-genetic">
+                                    <label for="checklist-genetic">Genetic testing (optional)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-registry">
+                                    <label for="checklist-registry">Start baby registry</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="checklist-classes">
+                                    <label for="checklist-classes">Sign up for birth classes</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data Controls -->
+                <div class="data-controls" id="pregnancy-controls" style="display: none;">
+                    <button class="btn btn-outline" id="edit-pregnancy-info">
+                        <i class="fas fa-edit"></i> Edit Pregnancy Info
+                    </button>
+                    <button class="btn btn-baby" id="save-pregnancy-data">
+                        <i class="fas fa-save"></i> Save All Data
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Symptom Modal -->
+    <div class="modal" id="addSymptomModal">
+        <div class="modal-content">
+            <div class="section-header">
+                <h3>Add Pregnancy Symptom</h3>
+                <button class="close-modal" id="closeSymptomModal">&times;</button>
+            </div>
+            <form id="addSymptomForm">
+                <div class="form-group">
+                    <label for="symptom-type" class="required">Symptom</label>
+                    <select id="symptom-type" class="form-control" required>
+                        <option value="">Select a symptom</option>
+                        <option value="nausea">Nausea/Morning Sickness</option>
+                        <option value="fatigue">Fatigue</option>
+                        <option value="food-cravings">Food Cravings</option>
+                        <option value="food-aversions">Food Aversions</option>
+                        <option value="breast-tenderness">Breast Tenderness</option>
+                        <option value="frequent-urination">Frequent Urination</option>
+                        <option value="mood-swings">Mood Swings</option>
+                        <option value="back-pain">Back Pain</option>
+                        <option value="round-ligament-pain">Round Ligament Pain</option>
+                        <option value="heartburn">Heartburn</option>
+                        <option value="constipation">Constipation</option>
+                        <option value="swelling">Swelling (Edema)</option>
+                        <option value="braxton-hicks">Braxton Hicks Contractions</option>
+                        <option value="insomnia">Insomnia</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="symptom-intensity" class="required">Intensity</label>
+                    <select id="symptom-intensity" class="form-control" required>
+                        <option value="mild">Mild</option>
+                        <option value="moderate" selected>Moderate</option>
+                        <option value="severe">Severe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="symptom-notes">Notes (optional)</label>
+                    <textarea id="symptom-notes" class="form-control" rows="3" placeholder="Any additional details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelSymptomBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Symptom</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div class="modal" id="addAppointmentModal">
+        <div class="modal-content">
+            <div class="section-header">
+                <h3>Add Appointment</h3>
+                <button class="close-modal" id="closeAppointmentModal">&times;</button>
+            </div>
+            <form id="addAppointmentForm">
+                <div class="form-group">
+                    <label for="appointment-type" class="required">Appointment Type</label>
+                    <select id="appointment-type" class="form-control" required>
+                        <option value="">Select type</option>
+                        <option value="prenatal">Prenatal Checkup</option>
+                        <option value="ultrasound">Ultrasound</option>
+                        <option value="lab">Lab Work/Blood Test</option>
+                        <option value="specialist">Specialist Consultation</option>
+                        <option value="classes">Birth/ Parenting Classes</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-date" class="required">Date</label>
+                    <input type="date" id="appointment-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-time">Time (optional)</label>
+                    <input type="time" id="appointment-time" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="appointment-provider">Provider (optional)</label>
+                    <input type="text" id="appointment-provider" class="form-control" placeholder="Dr. Smith">
+                </div>
+                <div class="form-group">
+                    <label for="appointment-location">Location (optional)</label>
+                    <input type="text" id="appointment-location" class="form-control" placeholder="Hospital/Clinic name">
+                </div>
+                <div class="form-group">
+                    <label for="appointment-notes">Notes (optional)</label>
+                    <textarea id="appointment-notes" class="form-control" rows="3" placeholder="Any special instructions..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelAppointmentBtn">Cancel</button>
+                    <button type="submit" class="btn btn-baby">Add Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Log Weight Modal -->
+    <div class="modal" id="logWeightModal">
+        <div class="modal-content">
+            <div class="section-header">
+                <h3>Log Weight</h3>
+                <button class="close-modal" id="closeWeightModal">&times;</button>
+            </div>
+            <form id="logWeightForm">
+                <div class="form-group">
+                    <label for="weight-date" class="required">Date</label>
+                    <input type="date" id="weight-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="weight-value" class="required">Weight</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="weight-value" class="form-control" step="0.1" required>
+                        <span class="input-icon">lbs</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="weight-notes">Notes (optional)</label>
+                    <textarea id="weight-notes" class="form-control" rows="3" placeholder="Any notes about how you're feeling..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelWeightBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Log Weight</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Pregnancy data model
+        const pregnancyData = {
+            // Pregnancy setup
+            setupComplete: false,
+            
+            // Due date information
+            dueDate: null,
+            dueDateMethod: "lmp",
+            lastPeriodDate: null,
+            conceptionDate: null,
+            ultrasoundDate: null,
+            cycleLength: 28,
+            cycleIrregular: false,
+            
+            // Pregnancy details
+            pregnancyNumber: "1",
+            pregnancyType: "single",
+            babyGender: "unknown",
+            babyNames: "",
+            pregnancyNotes: "",
+            
+            // Health information
+            prePregnancyWeight: null,
+            currentWeight: null,
+            height: null,
+            healthConditions: [],
+            healthNotes: "",
+            providerName: "",
+            providerPhone: "",
+            
+            // Settings
+            appointmentReminders: true,
+            weeklyUpdates: true,
+            symptomTracking: true,
+            
+            // Current state
+            currentWeek: 12,
+            currentTrimester: "first",
+            daysToGo: 196,
+            babySize: "Plum",
+            babyMeasurements: "~2.1 inches, 0.5 oz",
+            
+            // Tracking data
+            symptoms: [],
+            weightLogs: [],
+            appointments: [],
+            weeklyNotes: {},
+            
+            // Default appointments
+            defaultAppointments: [
+                {
+                    type: "prenatal",
+                    date: "2025-12-28",
+                    time: "10:30",
+                    provider: "Dr. Smith",
+                    notes: "Prenatal checkup - bring urine sample"
+                }
+            ],
+            
+            // Baby size by week (simplified)
+            babySizes: {
+                4: { size: "Poppy Seed", length: "0.04 in", weight: "0.04 oz" },
+                5: { size: "Sesame Seed", length: "0.13 in", weight: "0.04 oz" },
+                6: { size: "Lentil", length: "0.25 in", weight: "0.04 oz" },
+                7: { size: "Blueberry", length: "0.51 in", weight: "0.04 oz" },
+                8: { size: "Raspberry", length: "0.63 in", weight: "0.04 oz" },
+                9: { size: "Green Olive", length: "0.9 in", weight: "0.07 oz" },
+                10: { size: "Prune", length: "1.22 in", weight: "0.14 oz" },
+                11: { size: "Lime", length: "1.61 in", weight: "0.25 oz" },
+                12: { size: "Plum", length: "2.13 in", weight: "0.49 oz" },
+                13: { size: "Peach", length: "2.91 in", weight: "0.81 oz" },
+                14: { size: "Lemon", length: "3.42 in", weight: "1.52 oz" },
+                15: { size: "Apple", length: "3.98 in", weight: "2.47 oz" },
+                16: { size: "Avocado", length: "4.57 in", weight: "3.53 oz" },
+                17: { size: "Pear", length: "5.12 in", weight: "4.94 oz" },
+                18: { size: "Bell Pepper", length: "5.59 in", weight: "6.70 oz" },
+                19: { size: "Tomato", length: "6.02 in", weight: "8.47 oz" },
+                20: { size: "Banana", length: "6.46 in", weight: "10.58 oz" }
+                // ... continues through week 40
+            }
+        };
+
+        // DOM elements
+        // Step navigation
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        
+        // Step content sections
+        const step1Content = document.getElementById('step1-content');
+        const step2Content = document.getElementById('step2-content');
+        const step3Content = document.getElementById('step3-content');
+        const step4Content = document.getElementById('step4-content');
+        
+        // Setup section
+        const setupSection = document.getElementById('setup-section');
+        
+        // Dashboard sections (after setup)
+        const pregnancyDashboard = document.getElementById('pregnancy-dashboard');
+        const progressSection = document.getElementById('progress-section');
+        const trackingSection = document.getElementById('tracking-section');
+        const trimesterSection = document.getElementById('trimester-section');
+        const appointmentsSection = document.getElementById('appointments-section');
+        const pregnancyControls = document.getElementById('pregnancy-controls');
+        
+        // Navigation buttons
+        const nextToStep2 = document.getElementById('next-to-step2');
+        const backToStep1 = document.getElementById('back-to-step1');
+        const nextToStep3 = document.getElementById('next-to-step3');
+        const backToStep2 = document.getElementById('back-to-step2');
+        const nextToStep4 = document.getElementById('next-to-step4');
+        const backToStep3 = document.getElementById('back-to-step3');
+        const startPregnancyTracking = document.getElementById('start-pregnancy-tracking');
+        const calculateDueDateBtn = document.getElementById('calculate-due-date');
+        
+        // Input fields - Step 1
+        const dueDateMethodInputs = document.querySelectorAll('input[name="due-date-method"]');
+        const lastPeriodInput = document.getElementById('last-period');
+        const conceptionDateInput = document.getElementById('conception-date');
+        const ultrasoundDateInput = document.getElementById('ultrasound-date');
+        const dueDateInput = document.getElementById('due-date');
+        const cycleIrregularCheckbox = document.getElementById('cycle-irregular');
+        const cycleLengthInput = document.getElementById('cycle-length');
+        const cycleLengthContainer = document.getElementById('cycle-length-input');
+        
+        // Input fields - Step 2
+        const pregnancyNumberInput = document.getElementById('pregnancy-number');
+        const pregnancyTypeInputs = document.querySelectorAll('input[name="pregnancy-type"]');
+        const babyGenderInput = document.getElementById('baby-gender');
+        const babyNamesInput = document.getElementById('baby-names');
+        const pregnancyNotesInput = document.getElementById('pregnancy-notes');
+        
+        // Input fields - Step 3
+        const prePregnancyWeightInput = document.getElementById('pre-pregnancy-weight');
+        const currentWeightInput = document.getElementById('current-weight');
+        const heightInput = document.getElementById('height');
+        const healthConditionCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="condition-"]');
+        const healthNotesInput = document.getElementById('health-notes');
+        const providerNameInput = document.getElementById('provider-name');
+        const providerPhoneInput = document.getElementById('provider-phone');
+        
+        // Input fields - Step 4
+        const appointmentRemindersCheckbox = document.getElementById('appointment-reminders');
+        const weeklyUpdatesCheckbox = document.getElementById('weekly-updates');
+        const symptomTrackingCheckbox = document.getElementById('symptom-tracking');
+        
+        // Review summary
+        const reviewSummary = document.getElementById('review-summary');
+        
+        // Dashboard elements
+        const currentWeekEl = document.getElementById('current-week');
+        const currentTrimesterEl = document.getElementById('current-trimester');
+        const daysToGoEl = document.getElementById('days-to-go');
+        const dueDateDisplayEl = document.getElementById('due-date-display');
+        const babySizeEl = document.getElementById('baby-size');
+        const babyMeasurementsEl = document.getElementById('baby-measurements');
+        const babyGenderDisplayEl = document.getElementById('baby-gender-display');
+        const nextAppointmentEl = document.getElementById('next-appointment');
+        const appointmentTypeEl = document.getElementById('appointment-type');
+        const overallProgressEl = document.getElementById('overall-progress');
+        const progressTextEl = document.getElementById('progress-text');
+        const weekIndicatorEl = document.getElementById('week-indicator');
+        const babyGrowthChartEl = document.getElementById('baby-growth-chart');
+        const symptomsGridEl = document.getElementById('symptoms-grid');
+        const weightGridEl = document.getElementById('weight-grid');
+        const sizeComparisonEl = document.getElementById('size-comparison');
+        const weightComparisonEl = document.getElementById('weight-comparison');
+        const lengthComparisonEl = document.getElementById('length-comparison');
+        const weeklyNotesInput = document.getElementById('weekly-notes');
+        const currentTrimesterTitleEl = document.getElementById('current-trimester-title');
+        const nextAppointmentDateEl = document.getElementById('next-appointment-date');
+        const nextAppointmentTimeEl = document.getElementById('next-appointment-time');
+        const nextAppointmentNotesEl = document.getElementById('next-appointment-notes');
+        const upcomingTestsEl = document.getElementById('upcoming-tests');
+        
+        // Buttons
+        const logWeightBtn = document.getElementById('log-weight-btn');
+        const addSymptomBtn = document.getElementById('add-symptom-btn');
+        const addMemoryBtn = document.getElementById('add-memory-btn');
+        const saveWeeklyNotesBtn = document.getElementById('save-weekly-notes');
+        const addAppointmentBtn = document.getElementById('add-appointment-btn');
+        const editPregnancyInfoBtn = document.getElementById('edit-pregnancy-info');
+        const savePregnancyDataBtn = document.getElementById('save-pregnancy-data');
+        
+        // Modals
+        const addSymptomModal = document.getElementById('addSymptomModal');
+        const addAppointmentModal = document.getElementById('addAppointmentModal');
+        const logWeightModal = document.getElementById('logWeightModal');
+
+        // Initialize the application
+        function initPregnancyApp() {
+            // Set today's date as default in date inputs
+            const today = new Date().toISOString().split('T')[0];
+            lastPeriodInput.value = today;
+            conceptionDateInput.value = today;
+            ultrasoundDateInput.value = today;
+            dueDateInput.value = getDefaultDueDate();
+            
+            // Try to load saved pregnancy data from localStorage
+            const savedPregnancyData = localStorage.getItem('lifesync-pregnancy-data');
+            
+            if (savedPregnancyData) {
+                try {
+                    const parsedData = JSON.parse(savedPregnancyData);
+                    Object.assign(pregnancyData, parsedData);
+                    
+                    // Check if setup is complete
+                    if (pregnancyData.setupComplete) {
+                        // Show tracking dashboard
+                        showPregnancyDashboard();
+                        updatePregnancyUI();
+                        showNotification('Pregnancy data loaded successfully');
+                    } else {
+                        // Load saved data into form
+                        loadSavedDataIntoForm();
+                        showNotification('Previous pregnancy data loaded');
+                    }
+                } catch (e) {
+                    console.log('Error loading saved pregnancy data');
+                }
+            }
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Get default due date (40 weeks from today)
+        function getDefaultDueDate() {
+            const today = new Date();
+            const dueDate = new Date(today);
+            dueDate.setDate(dueDate.getDate() + 280); // 40 weeks * 7 days
+            return dueDate.toISOString().split('T')[0];
+        }
+
+        // Load saved data into form
+        function loadSavedDataIntoForm() {
+            // Step 1 data
+            if (pregnancyData.dueDateMethod) {
+                document.getElementById(`method-${pregnancyData.dueDateMethod}`).checked = true;
+                updateDueDateMethodInputs();
+            }
+            if (pregnancyData.lastPeriodDate) lastPeriodInput.value = pregnancyData.lastPeriodDate;
+            if (pregnancyData.conceptionDate) conceptionDateInput.value = pregnancyData.conceptionDate;
+            if (pregnancyData.ultrasoundDate) ultrasoundDateInput.value = pregnancyData.ultrasoundDate;
+            if (pregnancyData.dueDate) dueDateInput.value = pregnancyData.dueDate;
+            if (pregnancyData.cycleIrregular !== undefined) {
+                cycleIrregularCheckbox.checked = pregnancyData.cycleIrregular;
+                if (pregnancyData.cycleIrregular) {
+                    cycleLengthContainer.style.display = 'block';
+                }
+            }
+            if (pregnancyData.cycleLength) cycleLengthInput.value = pregnancyData.cycleLength;
+            
+            // Step 2 data
+            if (pregnancyData.pregnancyNumber) pregnancyNumberInput.value = pregnancyData.pregnancyNumber;
+            if (pregnancyData.pregnancyType) {
+                document.getElementById(`type-${pregnancyData.pregnancyType}`).checked = true;
+            }
+            if (pregnancyData.babyGender) babyGenderInput.value = pregnancyData.babyGender;
+            if (pregnancyData.babyNames) babyNamesInput.value = pregnancyData.babyNames;
+            if (pregnancyData.pregnancyNotes) pregnancyNotesInput.value = pregnancyData.pregnancyNotes;
+            
+            // Step 3 data
+            if (pregnancyData.prePregnancyWeight) prePregnancyWeightInput.value = pregnancyData.prePregnancyWeight;
+            if (pregnancyData.currentWeight) currentWeightInput.value = pregnancyData.currentWeight;
+            if (pregnancyData.height) heightInput.value = pregnancyData.height;
+            if (pregnancyData.healthConditions && pregnancyData.healthConditions.length > 0) {
+                pregnancyData.healthConditions.forEach(condition => {
+                    const checkbox = document.getElementById(`condition-${condition}`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+            if (pregnancyData.healthNotes) healthNotesInput.value = pregnancyData.healthNotes;
+            if (pregnancyData.providerName) providerNameInput.value = pregnancyData.providerName;
+            if (pregnancyData.providerPhone) providerPhoneInput.value = pregnancyData.providerPhone;
+            
+            // Step 4 data
+            if (pregnancyData.appointmentReminders !== undefined) {
+                appointmentRemindersCheckbox.checked = pregnancyData.appointmentReminders;
+            }
+            if (pregnancyData.weeklyUpdates !== undefined) {
+                weeklyUpdatesCheckbox.checked = pregnancyData.weeklyUpdates;
+            }
+            if (pregnancyData.symptomTracking !== undefined) {
+                symptomTrackingCheckbox.checked = pregnancyData.symptomTracking;
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Step navigation
+            nextToStep2.addEventListener('click', goToStep2);
+            backToStep1.addEventListener('click', goToStep1);
+            nextToStep3.addEventListener('click', goToStep3);
+            backToStep2.addEventListener('click', goToStep2);
+            nextToStep4.addEventListener('click', goToStep4);
+            backToStep3.addEventListener('click', goToStep3);
+            startPregnancyTracking.addEventListener('click', completeSetup);
+            calculateDueDateBtn.addEventListener('click', calculateDueDate);
+            
+            // Due date method selection
+            dueDateMethodInputs.forEach(input => {
+                input.addEventListener('change', updateDueDateMethodInputs);
+            });
+            
+            // Cycle irregular checkbox
+            cycleIrregularCheckbox.addEventListener('change', function() {
+                cycleLengthContainer.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Dashboard buttons
+            logWeightBtn.addEventListener('click', () => logWeightModal.style.display = 'flex');
+            addSymptomBtn.addEventListener('click', () => addSymptomModal.style.display = 'flex');
+            addMemoryBtn.addEventListener('click', () => {
+                // Simple memory addition - could be expanded to a modal
+                const memory = prompt("Enter a special memory or moment from this week:");
+                if (memory) {
+                    showNotification('Memory added to your pregnancy journal');
+                }
+            });
+            saveWeeklyNotesBtn.addEventListener('click', saveWeeklyNotes);
+            addAppointmentBtn.addEventListener('click', () => {
+                // Set default date to today
+                document.getElementById('appointment-date').value = new Date().toISOString().split('T')[0];
+                addAppointmentModal.style.display = 'flex';
+            });
+            editPregnancyInfoBtn.addEventListener('click', editPregnancyInfo);
+            savePregnancyDataBtn.addEventListener('click', saveAllData);
+            
+            // Modal close buttons
+            document.getElementById('closeSymptomModal').addEventListener('click', () => addSymptomModal.style.display = 'none');
+            document.getElementById('closeAppointmentModal').addEventListener('click', () => addAppointmentModal.style.display = 'none');
+            document.getElementById('closeWeightModal').addEventListener('click', () => logWeightModal.style.display = 'none');
+            document.getElementById('cancelSymptomBtn').addEventListener('click', () => addSymptomModal.style.display = 'none');
+            document.getElementById('cancelAppointmentBtn').addEventListener('click', () => addAppointmentModal.style.display = 'none');
+            document.getElementById('cancelWeightBtn').addEventListener('click', () => logWeightModal.style.display = 'none');
+            
+            // Modal form submissions
+            document.getElementById('addSymptomForm').addEventListener('submit', handleAddSymptom);
+            document.getElementById('addAppointmentForm').addEventListener('submit', handleAddAppointment);
+            document.getElementById('logWeightForm').addEventListener('submit', handleLogWeight);
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === addSymptomModal) addSymptomModal.style.display = 'none';
+                if (e.target === addAppointmentModal) addAppointmentModal.style.display = 'none';
+                if (e.target === logWeightModal) logWeightModal.style.display = 'none';
+            });
+        }
+
+        // Update due date method inputs based on selection
+        function updateDueDateMethodInputs() {
+            const selectedMethod = document.querySelector('input[name="due-date-method"]:checked').value;
+            
+            // Hide all inputs
+            document.getElementById('lmp-input').style.display = 'none';
+            document.getElementById('conception-input').style.display = 'none';
+            document.getElementById('ultrasound-input').style.display = 'none';
+            document.getElementById('known-due-date-input').style.display = 'none';
+            
+            // Show selected input
+            if (selectedMethod === 'lmp') {
+                document.getElementById('lmp-input').style.display = 'block';
+            } else if (selectedMethod === 'conception') {
+                document.getElementById('conception-input').style.display = 'block';
+            } else if (selectedMethod === 'ultrasound') {
+                document.getElementById('ultrasound-input').style.display = 'block';
+            } else if (selectedMethod === 'known') {
+                document.getElementById('known-due-date-input').style.display = 'block';
+            }
+        }
+
+        // Calculate due date based on selected method
+        function calculateDueDate() {
+            const method = document.querySelector('input[name="due-date-method"]:checked').value;
+            let dueDate = null;
+            
+            if (method === 'lmp' && lastPeriodInput.value) {
+                const lmpDate = new Date(lastPeriodInput.value);
+                const cycleLength = cycleIrregularCheckbox.checked ? parseInt(cycleLengthInput.value) || 28 : 28;
+                dueDate = new Date(lmpDate);
+                dueDate.setDate(dueDate.getDate() + 280 + (cycleLength - 28));
+            } else if (method === 'conception' && conceptionDateInput.value) {
+                const conceptionDate = new Date(conceptionDateInput.value);
+                dueDate = new Date(conceptionDate);
+                dueDate.setDate(dueDate.getDate() + 266); // 38 weeks
+            } else if (method === 'ultrasound' && ultrasoundDateInput.value) {
+                const ultrasoundDate = new Date(ultrasoundDateInput.value);
+                dueDate = new Date(ultrasoundDate);
+                // Ultrasound dating is usually accurate, so we'll use it directly
+            } else if (method === 'known' && dueDateInput.value) {
+                dueDate = new Date(dueDateInput.value);
+            }
+            
+            if (dueDate) {
+                // Update the known due date input
+                dueDateInput.value = dueDate.toISOString().split('T')[0];
+                
+                // Calculate and show current week
+                const today = new Date();
+                const diffTime = Math.abs(today.getTime() - dueDate.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const weeksPregnant = 40 - Math.floor(diffDays / 7);
+                
+                showNotification(`Based on your input, you're approximately ${weeksPregnant} weeks pregnant. Due date: ${formatDate(dueDate.toISOString().split('T')[0])}`);
+            } else {
+                showNotification('Please enter the required date information');
+            }
+        }
+
+        // Step navigation functions
+        function goToStep1() {
+            saveStep1Data();
+            showStep(1);
+        }
+
+        function goToStep2() {
+            if (!validateStep1()) {
+                showNotification('Please fill in the required date information');
+                return;
+            }
+            saveStep1Data();
+            showStep(2);
+        }
+
+        function goToStep3() {
+            saveStep2Data();
+            showStep(3);
+        }
+
+        function goToStep4() {
+            saveStep3Data();
+            updateReviewSummary();
+            showStep(4);
+        }
+
+        function showStep(stepNumber) {
+            // Hide all step content
+            step1Content.style.display = 'none';
+            step2Content.style.display = 'none';
+            step3Content.style.display = 'none';
+            step4Content.style.display = 'none';
+            
+            // Remove active class from all steps
+            step1.classList.remove('active', 'completed');
+            step2.classList.remove('active', 'completed');
+            step3.classList.remove('active', 'completed');
+            step4.classList.remove('active', 'completed');
+            
+            // Show current step content
+            if (stepNumber === 1) {
+                step1Content.style.display = 'block';
+                step1.classList.add('active');
+            } else if (stepNumber === 2) {
+                step2Content.style.display = 'block';
+                step2.classList.add('active');
+                step1.classList.add('completed');
+            } else if (stepNumber === 3) {
+                step3Content.style.display = 'block';
+                step3.classList.add('active');
+                step1.classList.add('completed');
+                step2.classList.add('completed');
+            } else if (stepNumber === 4) {
+                step4Content.style.display = 'block';
+                step4.classList.add('active');
+                step1.classList.add('completed');
+                step2.classList.add('completed');
+                step3.classList.add('completed');
+            }
+        }
+
+        // Validate Step 1 data
+        function validateStep1() {
+            const method = document.querySelector('input[name="due-date-method"]:checked').value;
+            
+            if (method === 'lmp' && !lastPeriodInput.value) {
+                return false;
+            }
+            if (method === 'conception' && !conceptionDateInput.value) {
+                return false;
+            }
+            if (method === 'ultrasound' && !ultrasoundDateInput.value) {
+                return false;
+            }
+            if (method === 'known' && !dueDateInput.value) {
+                return false;
+            }
+            
+            if (cycleIrregularCheckbox.checked && (!cycleLengthInput.value || cycleLengthInput.value < 21 || cycleLengthInput.value > 45)) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Save Step 1 data
+        function saveStep1Data() {
+            const method = document.querySelector('input[name="due-date-method"]:checked').value;
+            
+            pregnancyData.dueDateMethod = method;
+            pregnancyData.lastPeriodDate = lastPeriodInput.value;
+            pregnancyData.conceptionDate = conceptionDateInput.value;
+            pregnancyData.ultrasoundDate = ultrasoundDateInput.value;
+            pregnancyData.dueDate = dueDateInput.value;
+            pregnancyData.cycleIrregular = cycleIrregularCheckbox.checked;
+            pregnancyData.cycleLength = cycleLengthInput.value ? parseInt(cycleLengthInput.value) : 28;
+        }
+
+        // Save Step 2 data
+        function saveStep2Data() {
+            pregnancyData.pregnancyNumber = pregnancyNumberInput.value;
+            
+            // Pregnancy type
+            pregnancyTypeInputs.forEach(input => {
+                if (input.checked) {
+                    pregnancyData.pregnancyType = input.value;
+                }
+            });
+            
+            pregnancyData.babyGender = babyGenderInput.value;
+            pregnancyData.babyNames = babyNamesInput.value;
+            pregnancyData.pregnancyNotes = pregnancyNotesInput.value;
+        }
+
+        // Save Step 3 data
+        function saveStep3Data() {
+            pregnancyData.prePregnancyWeight = prePregnancyWeightInput.value ? parseFloat(prePregnancyWeightInput.value) : null;
+            pregnancyData.currentWeight = currentWeightInput.value ? parseFloat(currentWeightInput.value) : null;
+            pregnancyData.height = heightInput.value ? parseFloat(heightInput.value) : null;
+            
+            // Health conditions
+            pregnancyData.healthConditions = [];
+            healthConditionCheckboxes.forEach(checkbox => {
+                if (checkbox.checked && checkbox.id !== 'condition-none') {
+                    const condition = checkbox.id.replace('condition-', '');
+                    pregnancyData.healthConditions.push(condition);
+                }
+            });
+            
+            pregnancyData.healthNotes = healthNotesInput.value;
+            pregnancyData.providerName = providerNameInput.value;
+            pregnancyData.providerPhone = providerPhoneInput.value;
+        }
+
+        // Update review summary
+        function updateReviewSummary() {
+            reviewSummary.innerHTML = '';
+            
+            // Create summary cards
+            const summaries = [
+                {
+                    title: 'Due Date',
+                    items: [
+                        `Due Date: ${formatDate(pregnancyData.dueDate)}`,
+                        `Method: ${pregnancyData.dueDateMethod.toUpperCase()}`,
+                        `Current Week: ${calculateCurrentWeek()}`
+                    ]
+                },
+                {
+                    title: 'Pregnancy Details',
+                    items: [
+                        `Pregnancy #: ${pregnancyData.pregnancyNumber}`,
+                        `Type: ${pregnancyData.pregnancyType}`,
+                        `Gender: ${pregnancyData.babyGender === 'unknown' ? 'Not sure yet' : pregnancyData.babyGender}`
+                    ]
+                },
+                {
+                    title: 'Health Info',
+                    items: [
+                        `Provider: ${pregnancyData.providerName || 'Not specified'}`,
+                        `Conditions: ${pregnancyData.healthConditions.length > 0 ? pregnancyData.healthConditions.length : 'None'}`,
+                        `Tracking: ${pregnancyData.symptomTracking ? 'Enabled' : 'Disabled'}`
+                    ]
+                }
+            ];
+            
+            summaries.forEach((summary, index) => {
+                const summaryCard = document.createElement('div');
+                summaryCard.className = `pregnancy-card ${index === 0 ? 'baby-card' : ''}`;
+                summaryCard.style.setProperty('--i', index);
+                
+                let itemsHtml = '';
+                summary.items.forEach(item => {
+                    itemsHtml += `<div class="pregnancy-label">${item}</div>`;
+                });
+                
+                summaryCard.innerHTML = `
+                    <div class="pregnancy-header">
+                        <h3>${summary.title}</h3>
+                        <i class="fas fa-${index === 0 ? 'calendar' : index === 1 ? 'baby' : 'heartbeat'}"></i>
+                    </div>
+                    ${itemsHtml}
+                `;
+                
+                reviewSummary.appendChild(summaryCard);
+            });
+        }
+
+        // Calculate current week based on due date
+        function calculateCurrentWeek() {
+            if (!pregnancyData.dueDate) return "Unknown";
+            
+            const dueDate = new Date(pregnancyData.dueDate);
+            const today = new Date();
+            const diffTime = Math.abs(dueDate.getTime() - today.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weeksPregnant = 40 - Math.floor(diffDays / 7);
+            
+            return Math.max(1, Math.min(40, weeksPregnant));
+        }
+
+        // Complete setup and show pregnancy dashboard
+        function completeSetup() {
+            // Save Step 4 data
+            pregnancyData.appointmentReminders = appointmentRemindersCheckbox.checked;
+            pregnancyData.weeklyUpdates = weeklyUpdatesCheckbox.checked;
+            pregnancyData.symptomTracking = symptomTrackingCheckbox.checked;
+            
+            // Calculate current week
+            pregnancyData.currentWeek = calculateCurrentWeek();
+            
+            // Determine trimester
+            if (pregnancyData.currentWeek <= 13) {
+                pregnancyData.currentTrimester = "first";
+            } else if (pregnancyData.currentWeek <= 27) {
+                pregnancyData.currentTrimester = "second";
+            } else {
+                pregnancyData.currentTrimester = "third";
+            }
+            
+            // Calculate days to go
+            if (pregnancyData.dueDate) {
+                const dueDate = new Date(pregnancyData.dueDate);
+                const today = new Date();
+                const diffTime = dueDate.getTime() - today.getTime();
+                pregnancyData.daysToGo = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            }
+            
+            // Get baby size for current week
+            const week = Math.min(pregnancyData.currentWeek, 40);
+            const babySize = pregnancyData.babySizes[Math.min(week, 20)] || pregnancyData.babySizes[20];
+            if (babySize) {
+                pregnancyData.babySize = babySize.size;
+                pregnancyData.babyMeasurements = `${babySize.length}, ${babySize.weight}`;
+            }
+            
+            // Mark setup as complete
+            pregnancyData.setupComplete = true;
+            
+            // Save data
+            saveAllData();
+            
+            // Show tracking dashboard
+            showPregnancyDashboard();
+            
+            // Update UI
+            updatePregnancyUI();
+            
+            showNotification('Pregnancy tracking started successfully!');
+        }
+
+        // Show pregnancy dashboard (after setup)
+        function showPregnancyDashboard() {
+            // Hide setup section
+            setupSection.style.display = 'none';
+            step1Content.style.display = 'none';
+            step2Content.style.display = 'none';
+            step3Content.style.display = 'none';
+            step4Content.style.display = 'none';
+            
+            // Show dashboard sections
+            pregnancyDashboard.style.display = 'block';
+            progressSection.style.display = 'block';
+            trackingSection.style.display = 'block';
+            trimesterSection.style.display = 'block';
+            appointmentsSection.style.display = 'block';
+            pregnancyControls.style.display = 'flex';
+        }
+
+        // Update pregnancy UI
+        function updatePregnancyUI() {
+            if (!pregnancyData.setupComplete) return;
+            
+            // Update dashboard cards
+            currentWeekEl.textContent = `Week ${pregnancyData.currentWeek}`;
+            currentTrimesterEl.textContent = `${pregnancyData.currentTrimester.charAt(0).toUpperCase() + pregnancyData.currentTrimester.slice(1)} Trimester`;
+            daysToGoEl.textContent = pregnancyData.daysToGo;
+            dueDateDisplayEl.textContent = `Due: ${formatDate(pregnancyData.dueDate)}`;
+            babySizeEl.textContent = pregnancyData.babySize;
+            babyMeasurementsEl.textContent = pregnancyData.babyMeasurements;
+            babyGenderDisplayEl.textContent = `Gender: ${pregnancyData.babyGender === 'unknown' ? 'Unknown' : pregnancyData.babyGender === 'girl' ? 'Girl' : pregnancyData.babyGender === 'boy' ? 'Boy' : 'Surprise!'}`;
+            
+            // Update next appointment
+            if (pregnancyData.appointments && pregnancyData.appointments.length > 0) {
+                const nextAppt = pregnancyData.appointments[0];
+                nextAppointmentEl.textContent = formatDateShort(nextAppt.date);
+                appointmentTypeEl.textContent = nextAppt.type === 'prenatal' ? 'Prenatal Checkup' : 
+                                               nextAppt.type === 'ultrasound' ? 'Ultrasound' :
+                                               nextAppt.type === 'lab' ? 'Lab Work' :
+                                               nextAppt.type === 'specialist' ? 'Specialist' :
+                                               nextAppt.type === 'classes' ? 'Birth Classes' : 'Appointment';
+            } else if (pregnancyData.defaultAppointments && pregnancyData.defaultAppointments.length > 0) {
+                const defaultAppt = pregnancyData.defaultAppointments[0];
+                nextAppointmentEl.textContent = formatDateShort(defaultAppt.date);
+                appointmentTypeEl.textContent = 'Prenatal Checkup';
+            }
+            
+            // Update progress
+            const progressPercentage = (pregnancyData.currentWeek / 40) * 100;
+            overallProgressEl.style.width = `${progressPercentage}%`;
+            progressTextEl.textContent = `${Math.round(progressPercentage)}% complete - ${pregnancyData.currentWeek} of 40 weeks`;
+            
+            // Update week indicator
+            updateWeekIndicator();
+            
+            // Update baby growth chart
+            updateBabyGrowthChart();
+            
+            // Update symptoms
+            updateSymptomsUI();
+            
+            // Update weight tracking
+            updateWeightUI();
+            
+            // Update size comparison
+            updateSizeComparison();
+            
+            // Update trimester info
+            updateTrimesterUI();
+            
+            // Update appointments
+            updateAppointmentsUI();
+        }
+
+        // Update week indicator
+        function updateWeekIndicator() {
+            weekIndicatorEl.innerHTML = '';
+            
+            // Show current week and surrounding weeks
+            const startWeek = Math.max(1, pregnancyData.currentWeek - 2);
+            const endWeek = Math.min(40, pregnancyData.currentWeek + 2);
+            
+            for (let week = startWeek; week <= endWeek; week++) {
+                const weekItem = document.createElement('div');
+                weekItem.className = 'week-item';
+                if (week === pregnancyData.currentWeek) {
+                    weekItem.classList.add('active');
+                }
+                
+                weekItem.innerHTML = `
+                    <div class="week-number">${week}</div>
+                    <div class="week-label">Week</div>
+                `;
+                
+                weekItem.addEventListener('click', () => {
+                    pregnancyData.currentWeek = week;
+                    updatePregnancyUI();
+                    showNotification(`Now viewing Week ${week}`);
+                });
+                
+                weekIndicatorEl.appendChild(weekItem);
+            }
+        }
+
+        // Update baby growth chart
+        function updateBabyGrowthChart() {
+            babyGrowthChartEl.innerHTML = '';
+            
+            // Show growth for weeks 1-20 (or up to current week)
+            const maxWeek = Math.min(20, pregnancyData.currentWeek);
+            
+            for (let week = 4; week <= maxWeek; week += 2) {
+                const sizeData = pregnancyData.babySizes[week];
+                if (!sizeData) continue;
+                
+                // Convert length to a height for the chart
+                const lengthInches = parseFloat(sizeData.length.split(' ')[0]);
+                const height = Math.min(100, lengthInches * 20); // Scale factor
+                
+                const growthBar = document.createElement('div');
+                growthBar.className = 'growth-bar';
+                growthBar.style.height = `${height}%`;
+                growthBar.style.setProperty('--chart-height', `${height}%`);
+                growthBar.style.animationDelay = `${(week - 4) / 2 * 0.1}s`;
+                growthBar.title = `Week ${week}: ${sizeData.size} (${sizeData.length})`;
+                
+                const label = document.createElement('div');
+                label.className = 'growth-label';
+                label.textContent = week;
+                
+                growthBar.appendChild(label);
+                babyGrowthChartEl.appendChild(growthBar);
+            }
+        }
+
+        // Update symptoms UI
+        function updateSymptomsUI() {
+            symptomsGridEl.innerHTML = '';
+            
+            // Common pregnancy symptoms for the current trimester
+            let commonSymptoms = [];
+            
+            if (pregnancyData.currentTrimester === 'first') {
+                commonSymptoms = [
+                    { type: 'nausea', name: 'Nausea', icon: 'fas fa-stomach' },
+                    { type: 'fatigue', name: 'Fatigue', icon: 'fas fa-bed' },
+                    { type: 'breast-tenderness', name: 'Breast Tenderness', icon: 'fas fa-heart' },
+                    { type: 'food-cravings', name: 'Food Cravings', icon: 'fas fa-cookie-bite' }
+                ];
+            } else if (pregnancyData.currentTrimester === 'second') {
+                commonSymptoms = [
+                    { type: 'back-pain', name: 'Back Pain', icon: 'fas fa-spine' },
+                    { type: 'round-ligament-pain', name: 'Round Ligament Pain', icon: 'fas fa-dumbbell' },
+                    { type: 'food-cravings', name: 'Food Cravings', icon: 'fas fa-cookie-bite' },
+                    { type: 'heartburn', name: 'Heartburn', icon: 'fas fa-fire' }
+                ];
+            } else {
+                commonSymptoms = [
+                    { type: 'back-pain', name: 'Back Pain', icon: 'fas fa-spine' },
+                    { type: 'swelling', name: 'Swelling', icon: 'fas fa-weight' },
+                    { type: 'braxton-hicks', name: 'Braxton Hicks', icon: 'fas fa-wave-square' },
+                    { type: 'insomnia', name: 'Insomnia', icon: 'fas fa-moon' }
+                ];
+            }
+            
+            // Get today's logged symptoms
+            const today = new Date().toISOString().split('T')[0];
+            const todayLog = pregnancyData.symptoms.find(log => log.date === today);
+            const todaysSymptoms = todayLog ? todayLog.symptoms || [] : [];
+            
+            if (todaysSymptoms.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'symptom-item';
+                emptyMsg.innerHTML = '<p>No symptoms logged today.</p>';
+                symptomsGridEl.appendChild(emptyMsg);
+            } else {
+                todaysSymptoms.forEach((symptom, index) => {
+                    const symptomItem = document.createElement('div');
+                    symptomItem.className = 'symptom-item active';
+                    symptomItem.style.animationDelay = `${index * 0.1}s`;
+                    
+                    const symptomInfo = commonSymptoms.find(s => s.type === symptom.type) || { name: symptom.type, icon: 'fas fa-heartbeat' };
+                    
+                    symptomItem.innerHTML = `
+                        <div class="symptom-icon">
+                            <i class="${symptomInfo.icon}"></i>
+                        </div>
+                        <div class="symptom-name">${symptomInfo.name}</div>
+                        <div style="font-size: 12px; color: var(--gray); margin-top: 5px;">${symptom.intensity}</div>
+                    `;
+                    
+                    symptomsGridEl.appendChild(symptomItem);
+                });
+            }
+            
+            // Add common symptoms as options
+            commonSymptoms.forEach((symptom, index) => {
+                const alreadyLogged = todaysSymptoms.some(s => s.type === symptom.type);
+                if (alreadyLogged) return;
+                
+                const symptomItem = document.createElement('div');
+                symptomItem.className = 'symptom-item';
+                symptomItem.style.animationDelay = `${(todaysSymptoms.length + index) * 0.1}s`;
+                
+                symptomItem.innerHTML = `
+                    <div class="symptom-icon">
+                        <i class="${symptom.icon}"></i>
+                    </div>
+                    <div class="symptom-name">${symptom.name}</div>
+                `;
+                
+                symptomItem.addEventListener('click', () => {
+                    // Add symptom
+                    const today = new Date().toISOString().split('T')[0];
+                    let todayLog = pregnancyData.symptoms.find(log => log.date === today);
+                    
+                    if (!todayLog) {
+                        todayLog = {
+                            date: today,
+                            symptoms: []
+                        };
+                        pregnancyData.symptoms.push(todayLog);
+                    }
+                    
+                    todayLog.symptoms.push({
+                        type: symptom.type,
+                        intensity: 'moderate',
+                        notes: ''
+                    });
+                    
+                    updateSymptomsUI();
+                    showNotification(`${symptom.name} symptom added`);
+                });
+                
+                symptomsGridEl.appendChild(symptomItem);
+            });
+        }
+
+        // Update weight UI
+        function updateWeightUI() {
+            weightGridEl.innerHTML = '';
+            
+            // Show last 3 weight entries
+            const recentWeights = pregnancyData.weightLogs
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3);
+            
+            if (recentWeights.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'symptom-item';
+                emptyMsg.innerHTML = '<p>No weight entries yet.</p>';
+                weightGridEl.appendChild(emptyMsg);
+                return;
+            }
+            
+            recentWeights.forEach((weightLog, index) => {
+                const weightItem = document.createElement('div');
+                weightItem.className = 'symptom-item';
+                weightItem.style.animationDelay = `${index * 0.1}s`;
+                
+                const date = new Date(weightLog.date);
+                const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                
+                weightItem.innerHTML = `
+                    <div class="symptom-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="symptom-name">${weightLog.weight} lbs</div>
+                    <div style="font-size: 12px; color: var(--gray); margin-top: 5px;">${formattedDate}</div>
+                `;
+                
+                weightGridEl.appendChild(weightItem);
+            });
+        }
+
+        // Update size comparison
+        function updateSizeComparison() {
+            const week = Math.min(pregnancyData.currentWeek, 40);
+            const babySize = pregnancyData.babySizes[Math.min(week, 20)] || pregnancyData.babySizes[20];
+            
+            if (babySize) {
+                sizeComparisonEl.textContent = babySize.size;
+                weightComparisonEl.textContent = babySize.weight;
+                lengthComparisonEl.textContent = babySize.length;
+            }
+        }
+
+        // Update trimester UI
+        function updateTrimesterUI() {
+            currentTrimesterTitleEl.textContent = `${pregnancyData.currentTrimester.charAt(0).toUpperCase() + pregnancyData.currentTrimester.slice(1)} Trimester (Week ${pregnancyData.currentWeek})`;
+        }
+
+        // Update appointments UI
+        function updateAppointmentsUI() {
+            // Next appointment
+            const nextAppt = pregnancyData.appointments && pregnancyData.appointments.length > 0 
+                ? pregnancyData.appointments[0] 
+                : pregnancyData.defaultAppointments[0];
+            
+            if (nextAppt) {
+                nextAppointmentDateEl.textContent = formatDate(nextAppt.date);
+                nextAppointmentTimeEl.textContent = nextAppt.time ? `${nextAppt.time} with ${nextAppt.provider || 'Provider'}` : 'Time not set';
+                nextAppointmentNotesEl.textContent = nextAppt.notes || 'No additional notes';
+            }
+            
+            // Upcoming tests based on week
+            if (pregnancyData.currentWeek <= 13) {
+                upcomingTestsEl.textContent = "Nuchal Translucency Scan (Week 12)";
+            } else if (pregnancyData.currentWeek <= 20) {
+                upcomingTestsEl.textContent = "Anatomy Scan (Week 20)";
+            } else if (pregnancyData.currentWeek <= 28) {
+                upcomingTestsEl.textContent = "Glucose Test (Week 24-28)";
+            } else {
+                upcomingTestsEl.textContent = "Group B Strep Test (Week 36-37)";
+            }
+        }
+
+        // Handle add symptom form submission
+        function handleAddSymptom(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('symptom-type').value;
+            const intensity = document.getElementById('symptom-intensity').value;
+            const notes = document.getElementById('symptom-notes').value;
+            
+            if (!type) {
+                showNotification('Please select a symptom');
+                return;
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Find or create today's log
+            let todayLog = pregnancyData.symptoms.find(log => log.date === today);
+            if (!todayLog) {
+                todayLog = {
+                    date: today,
+                    symptoms: []
+                };
+                pregnancyData.symptoms.push(todayLog);
+            }
+            
+            // Add symptom
+            todayLog.symptoms.push({
+                type,
+                intensity,
+                notes: notes || ''
+            });
+            
+            // Update UI
+            updateSymptomsUI();
+            addSymptomModal.style.display = 'none';
+            
+            // Reset form
+            e.target.reset();
+            
+            showNotification('Symptom added successfully');
+        }
+
+        // Handle add appointment form submission
+        function handleAddAppointment(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('appointment-type').value;
+            const date = document.getElementById('appointment-date').value;
+            const time = document.getElementById('appointment-time').value;
+            const provider = document.getElementById('appointment-provider').value;
+            const location = document.getElementById('appointment-location').value;
+            const notes = document.getElementById('appointment-notes').value;
+            
+            if (!type || !date) {
+                showNotification('Please fill in the required fields');
+                return;
+            }
+            
+            // Create appointment
+            const appointment = {
+                type,
+                date,
+                time: time || '',
+                provider: provider || '',
+                location: location || '',
+                notes: notes || ''
+            };
+            
+            // Add to appointments array
+            if (!pregnancyData.appointments) {
+                pregnancyData.appointments = [];
+            }
+            
+            pregnancyData.appointments.push(appointment);
+            
+            // Sort appointments by date
+            pregnancyData.appointments.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Update UI
+            updateAppointmentsUI();
+            addAppointmentModal.style.display = 'none';
+            
+            // Reset form
+            e.target.reset();
+            
+            showNotification('Appointment added successfully');
+        }
+
+        // Handle log weight form submission
+        function handleLogWeight(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('weight-date').value;
+            const weight = parseFloat(document.getElementById('weight-value').value);
+            const notes = document.getElementById('weight-notes').value;
+            
+            if (!date || !weight) {
+                showNotification('Please fill in the required fields');
+                return;
+            }
+            
+            // Create weight log
+            const weightLog = {
+                date,
+                weight,
+                notes: notes || ''
+            };
+            
+            // Add to weight logs
+            if (!pregnancyData.weightLogs) {
+                pregnancyData.weightLogs = [];
+            }
+            
+            // Check if entry already exists for this date
+            const existingIndex = pregnancyData.weightLogs.findIndex(log => log.date === date);
+            if (existingIndex !== -1) {
+                pregnancyData.weightLogs[existingIndex] = weightLog;
+            } else {
+                pregnancyData.weightLogs.push(weightLog);
+            }
+            
+            // Sort by date
+            pregnancyData.weightLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Update current weight if this is today's entry
+            const today = new Date().toISOString().split('T')[0];
+            if (date === today) {
+                pregnancyData.currentWeight = weight;
+            }
+            
+            // Update UI
+            updateWeightUI();
+            logWeightModal.style.display = 'none';
+            
+            // Reset form
+            e.target.reset();
+            document.getElementById('weight-date').value = new Date().toISOString().split('T')[0];
+            
+            showNotification('Weight logged successfully');
+        }
+
+        // Save weekly notes
+        function saveWeeklyNotes() {
+            const notes = weeklyNotesInput.value;
+            const week = pregnancyData.currentWeek;
+            
+            if (!pregnancyData.weeklyNotes) {
+                pregnancyData.weeklyNotes = {};
+            }
+            
+            pregnancyData.weeklyNotes[week] = notes;
+            showNotification('Weekly notes saved');
+        }
+
+        // Edit pregnancy info
+        function editPregnancyInfo() {
+            // Go back to setup
+            pregnancyData.setupComplete = false;
+            showStep(1);
+            
+            // Hide dashboard sections
+            pregnancyDashboard.style.display = 'none';
+            progressSection.style.display = 'none';
+            trackingSection.style.display = 'none';
+            trimesterSection.style.display = 'none';
+            appointmentsSection.style.display = 'none';
+            pregnancyControls.style.display = 'none';
+            
+            // Show setup section
+            setupSection.style.display = 'block';
+            
+            showNotification('You can now edit your pregnancy information');
+        }
+
+        // Save all data to localStorage
+        function saveAllData() {
+            localStorage.setItem('lifesync-pregnancy-data', JSON.stringify(pregnancyData));
+            showNotification('All pregnancy data saved successfully');
+        }
+
+        // Format date to readable string
+        function formatDate(dateString) {
+            if (!dateString) return "Not set";
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+        }
+
+        // Format date to short string (Month Day)
+        function formatDateShort(dateString) {
+            if (!dateString) return "Not set";
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric'
+            });
+        }
+
+        // Show a temporary notification
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize the pregnancy app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPregnancyApp);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSync Pro - Your all-in-one planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #ff5a8c; /* Strawberry Pink */
+            --primary-light: #ff8ab0;
+            --secondary: #ff2e6d;
+            --accent: #ff9ebf;
+            --success: #4cc9f0;
+            --warning: #ffb74d;
+            --danger: #ff5252;
+            --light: #fff5f8;
+            --dark: #2c2c2c;
+            --gray: #888888;
+            --gray-light: #f0f0f0;
+            --border-radius: 16px;
+            --box-shadow: 0 6px 20px rgba(255, 90, 140, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #fffafc;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            background-image: radial-gradient(var(--primary-light) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 90, 140, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: -5px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+            border: 1px solid rgba(255, 90, 140, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .sidebar h2 i {
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray);
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .sidebar li:hover {
+            background-color: var(--light);
+            color: var(--primary);
+            transform: translateX(5px);
+            border-color: rgba(255, 90, 140, 0.2);
+        }
+
+        .sidebar li.active {
+            background: linear-gradient(135deg, rgba(255, 90, 140, 0.1), rgba(255, 142, 191, 0.1));
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .dashboard-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .welcome-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .welcome-section h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .welcome-section p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(255, 90, 140, 0.2);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-header i {
+            font-size: 24px;
+            color: var(--primary);
+            background-color: rgba(255, 90, 140, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .positive {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: #4cc9f0;
+        }
+
+        .negative {
+            background-color: rgba(255, 82, 82, 0.1);
+            color: var(--danger);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--gray-light);
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .schedule-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h3 {
+            font-size: 22px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: rgba(255, 90, 140, 0.1);
+        }
+
+        .view-all:hover {
+            background-color: rgba(255, 90, 140, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: var(--light);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .schedule-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 90, 140, 0.15);
+            border-color: var(--accent);
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: var(--dark);
+            min-width: 100px;
+            font-size: 16px;
+        }
+
+        .schedule-details {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .schedule-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 17px;
+        }
+
+        .schedule-category {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .category-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .category-health {
+            background-color: rgba(76, 201, 240, 0.15);
+            color: #4cc9f0;
+        }
+
+        .category-work {
+            background-color: rgba(255, 90, 140, 0.15);
+            color: var(--primary);
+        }
+
+        .category-personal {
+            background-color: rgba(255, 158, 191, 0.15);
+            color: var(--accent);
+        }
+
+        .category-errands {
+            background-color: rgba(255, 183, 77, 0.15);
+            color: var(--warning);
+        }
+
+        .progress-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .progress-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 90, 140, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(180deg, var(--primary-light), var(--primary));
+            border-radius: 8px 8px 0 0;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transform: scale(1.05);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .data-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 90, 140, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 90, 140, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 90, 140, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Notification styling */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(255, 90, 140, 0.3);
+            z-index: 1000;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            border-left: 5px solid white;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        @media (max-width: 1100px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .sidebar h2 {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .sidebar li {
+                margin-bottom: 0;
+                flex: 1;
+                min-width: 140px;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .progress-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .schedule-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .schedule-details {
+                margin-left: 0;
+            }
+            
+            .data-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div>
+                    <h1>LifeSync Pro</h1>
+                    <p>Your all-in-one planner</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <span>Welcome back, <strong>Jane!</strong></span>
+                <div class="user-avatar">J</div>
+            </div>
+        </header>
+
+        <main>
+            <nav class="sidebar">
+                <h2><i class="fas fa-th-large"></i> Dashboard</h2>
+                <ul>
+                    <li class="active"><i class="fas fa-calendar-day"></i> <a href="index.html" style="text-decoration: none; color: inherit;">Daily Planner</a></li>
+                    <li><i class="fas fa-wallet"></i> <a href="budget.html" style="text-decoration: none; color: inherit;">Budget</a></li>
+                    <li><i class="fas fa-sync-alt"></i> <a href="cycle-tracker.html" style="text-decoration: none; color: inherit;">Cycle Tracker</a></li>
+                    <li><i class="fas fa-baby"></i> <a href="pregnancy.html" style="text-decoration: none; color: inherit;">Pregnancy</a></li>
+                    <li><i class="fas fa-utensils"></i> <a href="meal-planner.html" style="text-decoration: none; color: inherit;">Meal Planner</a></li>
+                    <li><i class="fas fa-calendar-alt"></i> <a href="calendar.html" style="text-decoration: none; color: inherit;">Calendar</a></li>
+                </ul>
+            </nav>
+
+            <div class="dashboard-content">
+                <section class="welcome-section">
+                    <h2>Welcome back, Jane!</h2>
+                    <p>Here's what's happening with your life today.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Tasks Completed</h3>
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-value" id="tasks-value">0</div>
+                            <div class="stat-label" id="tasks-label">0 of 0 tasks</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="tasks-progress" style="width: 0%"></div>
+                            </div>
+                            <div class="stat-change positive" id="tasks-change">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+0%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Budget Saved</h3>
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <div class="stat-value" id="budget-value">$0</div>
+                            <div class="stat-label" id="budget-label">of $0 spent</div>
+                            <div class="stat-change positive" id="budget-change">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+$0</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Health Score</h3>
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <div class="stat-value" id="health-value">0%</div>
+                            <div class="stat-label">Weekly target</div>
+                            <div class="stat-change positive" id="health-change">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+0%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Weekly Goals</h3>
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="stat-value" id="goals-value">0/0</div>
+                            <div class="stat-label">Goals completed</div>
+                            <div class="stat-change positive" id="goals-change">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="schedule-section">
+                    <div class="section-header">
+                        <h3>Today's Schedule</h3>
+                        <div class="view-all" id="view-schedule">View All</div>
+                    </div>
+                    <div class="schedule-list" id="schedule-list">
+                        <!-- Schedule items will be dynamically added here -->
+                        <div class="schedule-empty">
+                            <p>No schedule items yet. Add your first task!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="progress-section">
+                    <div class="progress-card">
+                        <div class="section-header">
+                            <h3>Budget Status</h3>
+                            <div class="stat-value" id="budget-spent">$0</div>
+                        </div>
+                        <div class="stat-label">of $0 spent | <span id="budget-percentage">0%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="budget-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="stat-change positive" id="budget-target">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>0% Weekly target</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="section-header">
+                            <h3>Weekly Activity</h3>
+                            <div class="stat-value" id="health-goals">0%</div>
+                        </div>
+                        <div class="stat-label">Health Goals - Weekly target</div>
+                        <div class="chart-container" id="weekly-chart">
+                            <!-- Chart bars will be dynamically added here -->
+                            <div class="chart-empty">
+                                <p>No weekly activity data yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-controls">
+                    <button class="btn btn-outline" id="add-sample-btn">
+                        <i class="fas fa-magic"></i> Add Sample Data
+                    </button>
+                    <button class="btn btn-primary" id="save-btn">
+                        <i class="fas fa-save"></i> Save Data
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Empty data model - users will start fresh
+        const appData = {
+            tasks: {
+                completed: 0,
+                total: 0,
+                change: 0
+            },
+            budget: {
+                saved: 0,
+                spent: 0,
+                total: 0,
+                change: 0
+            },
+            health: {
+                score: 0,
+                change: 0
+            },
+            goals: {
+                completed: 0,
+                total: 0,
+                change: 0
+            },
+            schedule: [],
+            weeklyActivity: [0, 0, 0, 0, 0, 0, 0] // Mon-Sun
+        };
+
+        // Sample data for "Add Sample Data" button
+        const sampleData = {
+            tasks: {
+                completed: 26,
+                total: 40,
+                change: 12
+            },
+            budget: {
+                saved: 342,
+                spent: 1440,
+                total: 2000,
+                change: 28
+            },
+            health: {
+                score: 88,
+                change: 8
+            },
+            goals: {
+                completed: 18,
+                total: 20,
+                change: 5
+            },
+            schedule: [
+                { time: "07:00 AM", title: "Morning workout", category: "Health", categoryClass: "category-health" },
+                { time: "10:00 AM", title: "Team meeting", category: "Work", categoryClass: "category-work" },
+                { time: "12:00 PM", title: "Lunch with Sarah", category: "Personal", categoryClass: "category-personal" },
+                { time: "03:00 PM", title: "Grocery shopping", category: "Errands", categoryClass: "category-errands" },
+                { time: "05:00 PM", title: "Budget review", category: "Work", categoryClass: "category-work" }
+            ],
+            weeklyActivity: [65, 72, 80, 75, 88, 70, 65] // Mon-Sun
+        };
+
+        // DOM elements
+        const tasksValueEl = document.getElementById('tasks-value');
+        const tasksLabelEl = document.getElementById('tasks-label');
+        const tasksProgressEl = document.getElementById('tasks-progress');
+        const tasksChangeEl = document.getElementById('tasks-change');
+        const budgetValueEl = document.getElementById('budget-value');
+        const budgetLabelEl = document.getElementById('budget-label');
+        const budgetChangeEl = document.getElementById('budget-change');
+        const healthValueEl = document.getElementById('health-value');
+        const healthChangeEl = document.getElementById('health-change');
+        const goalsValueEl = document.getElementById('goals-value');
+        const goalsChangeEl = document.getElementById('goals-change');
+        const scheduleListEl = document.getElementById('schedule-list');
+        const budgetSpentEl = document.getElementById('budget-spent');
+        const budgetPercentageEl = document.getElementById('budget-percentage');
+        const budgetProgressEl = document.getElementById('budget-progress');
+        const budgetTargetEl = document.getElementById('budget-target');
+        const healthGoalsEl = document.getElementById('health-goals');
+        const weeklyChartEl = document.getElementById('weekly-chart');
+        const addSampleBtn = document.getElementById('add-sample-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const viewScheduleBtn = document.getElementById('view-schedule');
+
+        // Days of the week for the chart
+        const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+        // Initialize the application
+        function initApp() {
+            // Try to load saved data from localStorage
+            const savedData = localStorage.getItem('lifesync-data');
+            
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    Object.assign(appData, parsedData);
+                    showNotification('Your data has been loaded');
+                } catch (e) {
+                    console.log('Error loading saved data');
+                }
+            } else {
+                showNotification('Welcome to LifeSync Pro! Start by adding some data.');
+            }
+            
+            // Update the UI with current data
+            updateUI();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Update the UI with current data
+        function updateUI() {
+            // Update tasks
+            const tasksPercentage = appData.tasks.total > 0 ? (appData.tasks.completed / appData.tasks.total) * 100 : 0;
+            tasksValueEl.textContent = appData.tasks.completed;
+            tasksLabelEl.textContent = `${appData.tasks.completed} of ${appData.tasks.total} tasks`;
+            tasksProgressEl.style.width = `${tasksPercentage}%`;
+            tasksChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i><span>+${appData.tasks.change}%</span>`;
+            
+            // Update budget
+            budgetValueEl.textContent = `$${appData.budget.saved}`;
+            budgetLabelEl.textContent = `of $${appData.budget.total} spent`;
+            budgetSpentEl.textContent = `$${appData.budget.spent}`;
+            const budgetPercentage = appData.budget.total > 0 ? (appData.budget.spent / appData.budget.total) * 100 : 0;
+            budgetPercentageEl.textContent = `${Math.round(budgetPercentage)}%`;
+            budgetProgressEl.style.width = `${budgetPercentage}%`;
+            budgetChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i><span>+$${appData.budget.change}</span>`;
+            const budgetTargetPercentage = appData.budget.total > 0 ? (appData.budget.saved / appData.budget.total) * 100 : 0;
+            budgetTargetEl.innerHTML = `<i class="fas fa-arrow-up"></i><span>${Math.round(budgetTargetPercentage)}% Weekly target</span>`;
+            
+            // Update health
+            healthValueEl.textContent = `${appData.health.score}%`;
+            healthGoalsEl.textContent = `${appData.health.score}%`;
+            healthChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i><span>+${appData.health.change}%</span>`;
+            
+            // Update goals
+            goalsValueEl.textContent = `${appData.goals.completed}/${appData.goals.total}`;
+            goalsChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i><span>+${appData.goals.change}%</span>`;
+            
+            // Update schedule
+            updateSchedule();
+            
+            // Update weekly chart
+            updateWeeklyChart();
+        }
+
+        // Update the schedule list
+        function updateSchedule() {
+            scheduleListEl.innerHTML = '';
+            
+            if (appData.schedule.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'schedule-empty';
+                emptyMsg.innerHTML = '<p>No schedule items yet. Click "Add Sample Data" or create your own tasks!</p>';
+                scheduleListEl.appendChild(emptyMsg);
+                return;
+            }
+            
+            appData.schedule.forEach(item => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                
+                scheduleItem.innerHTML = `
+                    <div class="schedule-time">${item.time}</div>
+                    <div class="schedule-details">
+                        <div class="schedule-title">${item.title}</div>
+                        <div class="schedule-category">
+                            <span class="category-badge ${item.categoryClass}">${item.category}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                `;
+                
+                scheduleListEl.appendChild(scheduleItem);
+            });
+        }
+
+        // Update the weekly activity chart
+        function updateWeeklyChart() {
+            weeklyChartEl.innerHTML = '';
+            
+            // Check if we have any data
+            const hasData = appData.weeklyActivity.some(value => value > 0);
+            
+            if (!hasData) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'chart-empty';
+                emptyMsg.innerHTML = '<p>No weekly activity data yet. Add sample data or input your own.</p>';
+                weeklyChartEl.appendChild(emptyMsg);
+                return;
+            }
+            
+            // Find the maximum value for scaling
+            const maxValue = Math.max(...appData.weeklyActivity);
+            
+            appData.weeklyActivity.forEach((value, index) => {
+                const barHeight = value > 0 ? (value / maxValue) * 100 : 5;
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${barHeight}%`;
+                bar.title = `${daysOfWeek[index]}: ${value}%`;
+                
+                // Add a label for the day
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = daysOfWeek[index];
+                
+                bar.appendChild(label);
+                weeklyChartEl.appendChild(bar);
+                
+                // Add click event to update health score
+                bar.addEventListener('click', () => {
+                    // Update health score to the clicked day's value
+                    appData.health.score = value;
+                    updateUI();
+                    showNotification(`Health score updated to ${value}%`);
+                });
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Add sample data button
+            addSampleBtn.addEventListener('click', () => {
+                if (confirm('This will replace your current data with sample data. Continue?')) {
+                    Object.assign(appData, JSON.parse(JSON.stringify(sampleData)));
+                    updateUI();
+                    showNotification('Sample data loaded successfully');
+                }
+            });
+            
+            // Save button
+            saveBtn.addEventListener('click', () => {
+                localStorage.setItem('lifesync-data', JSON.stringify(appData));
+                showNotification('Data saved successfully to local storage');
+            });
+            
+            // View schedule button
+            viewScheduleBtn.addEventListener('click', () => {
+                showNotification('Schedule view coming soon!');
+            });
+            
+            // Add interaction to stat cards
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('dblclick', function() {
+                    const cardTitle = this.querySelector('h3').textContent;
+                    
+                    if (cardTitle === 'Tasks Completed') {
+                        // Initialize if needed
+                        if (appData.tasks.total === 0) {
+                            appData.tasks.total = 5;
+                        }
+                        
+                        // Increase tasks completed by 1
+                        if (appData.tasks.completed < appData.tasks.total) {
+                            appData.tasks.completed += 1;
+                            appData.tasks.change = Math.round((appData.tasks.completed / appData.tasks.total) * 100) / 10;
+                            updateUI();
+                            showNotification('Task marked as completed!');
+                        }
+                    } else if (cardTitle === 'Budget Saved') {
+                        // Initialize if needed
+                        if (appData.budget.total === 0) {
+                            appData.budget.total = 2000;
+                        }
+                        
+                        // Increase budget saved by $10
+                        appData.budget.saved += 10;
+                        appData.budget.change += 10;
+                        updateUI();
+                        showNotification('Budget saved increased by $10');
+                    } else if (cardTitle === 'Health Score') {
+                        // Increase health score by 1%
+                        if (appData.health.score < 100) {
+                            appData.health.score += 1;
+                            appData.health.change = Math.round(appData.health.score / 10);
+                            updateUI();
+                            showNotification('Health score increased by 1%');
+                        }
+                    } else if (cardTitle === 'Weekly Goals') {
+                        // Initialize if needed
+                        if (appData.goals.total === 0) {
+                            appData.goals.total = 10;
+                        }
+                        
+                        // Increase goals completed by 1
+                        if (appData.goals.completed < appData.goals.total) {
+                            appData.goals.completed += 1;
+                            appData.goals.change = Math.round((appData.goals.completed / appData.goals.total) * 100) / 10;
+                            updateUI();
+                            showNotification('Weekly goal marked as completed!');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Show a temporary notification
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
